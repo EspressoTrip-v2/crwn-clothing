@@ -22,25 +22,24 @@ class App extends React.Component {
 
   componentDidMount() {
     /* ASSIGN TO UNSUBSCRIBE_FROM_AUTH */
+    /* LISTENER GETTING USER AUTH IF STATE HAS CHANGED  */
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      /* CHECK IF USERAUTH IS NOTNULL */
+      console.log(userAuth);
+      /* CHECK IF USER AUTH IS NOT NULL */
       if (userAuth) {
         /* GET THE USER REFERENCE OBJECT FROM THE CERATE PROFILE FUNCTION */
         const userRef = await createUserProfileDocument(userAuth);
 
         if (userRef) {
-          /* GET THE SNAPSHOT OF USER REFERENCE */
+          /* GET THE SNAPSHOT OF USER REFERENCE TO EXTRACT THE DATA*/
           userRef.onSnapshot((snapshot) => {
             /* SET THE STATE */
-            this.setState(
-              {
-                currentUser: {
-                  id: snapshot.id,
-                  ...snapshot.data(),
-                },
+            this.setState({
+              currentUser: {
+                id: snapshot.id,
+                ...snapshot.data(),
               },
-              () => console.log(this.state)
-            );
+            });
           });
         }
       }
