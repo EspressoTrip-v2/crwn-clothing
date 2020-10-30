@@ -25,8 +25,8 @@ class App extends React.Component {
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       /* CHECK IF USER AUTH IS NOT NULL */
       if (userAuth) {
-        console.log(userAuth);
-        /* GET THE USER REFERENCE OBJECT FROM THE CERATE PROFILE FUNCTION */
+        /* FIREBASE CODE */
+        /* GET THE USER REFERENCE OBJECT FROM THE CREATE PROFILE FUNCTION */
         const userRef = await createUserProfileDocument(userAuth);
 
         if (userRef) {
@@ -69,11 +69,12 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser,
+/* GET THE STATE FROM REDUX STORE */
+const mapStateToProps = ({ user: { currentUser } }) => ({
+  currentUser,
 });
 
-/* DISPATCH THE STATE WITH REDUX TO MAIN APP */
+/* CHANGE STATE WITH DISPATCH, SEND TO ACTION */
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
 });
