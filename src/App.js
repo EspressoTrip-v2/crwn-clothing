@@ -9,24 +9,23 @@ import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.com
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
+/* REDUX ITEM MODULES */
+import { setCurrentUser } from './redux/user/user.actions';
+import { connect } from 'react-redux';
+
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentUser: null,
-    };
-  }
-
   unsubscribeFromAuth = null;
 
   componentDidMount() {
+    /* GET THE CURRENT USER FROM REDUX PROPS */
+    const { setCurrentUser } = this.props;
+
     /* ASSIGN TO UNSUBSCRIBE_FROM_AUTH */
     /* LISTENER GETTING USER AUTH IF STATE HAS CHANGED  */
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      console.log(userAuth);
       /* CHECK IF USER AUTH IS NOT NULL */
       if (userAuth) {
+        console.log(userAuth);
         /* GET THE USER REFERENCE OBJECT FROM THE CERATE PROFILE FUNCTION */
         const userRef = await createUserProfileDocument(userAuth);
 
@@ -34,7 +33,7 @@ class App extends React.Component {
           /* GET THE SNAPSHOT OF USER REFERENCE TO EXTRACT THE DATA*/
           userRef.onSnapshot((snapshot) => {
             /* SET THE STATE */
-            this.setState({
+            setCurrentUser({
               currentUser: {
                 id: snapshot.id,
                 ...snapshot.data(),
@@ -44,7 +43,7 @@ class App extends React.Component {
         }
       }
       /* IF USER AUTH IS NULL SET STATE TO NULL */
-      this.setState({ currentUser: userAuth });
+      setCurrentUser(userAuth);
     });
   }
 
@@ -55,7 +54,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header currentUser={this.state.currentUser} />
+        <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/shop" component={ShopPage} />
@@ -66,4 +65,10 @@ class App extends React.Component {
   }
 }
 
-export default App;
+/* DISPATCH THE STATE WITH REDUX TO MAIN APP */
+const mapDispatchToProps = (dispatch) => ({
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
+
+/* MAPSTETTOPROPS NOT USED WHEN DISPATCHING */
+export default connect(null, mapDispatchToProps)(App);

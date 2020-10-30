@@ -8,6 +8,8 @@ import './header.styles.scss'
 
 import {auth} from '../../firebase/firebase.utils'
 
+import {connect} from 'react-redux';
+
 
 const Header = ({currentUser})=>(
     
@@ -22,8 +24,6 @@ const Header = ({currentUser})=>(
         
         {
           currentUser? <div className="option" onClick={() =>auth.signOut()} >SIGN OUT</div> : <Link className="option" to="/signin">SIGN IN</Link>
-          
-          
         }
         
     </div>
@@ -31,4 +31,10 @@ const Header = ({currentUser})=>(
     
 )
 
-export default Header;
+/* FUNCTION TO GET STATE FROM USER REDUCER */
+const mapStateToProps = (state)=>({
+  currentUser: state.user.currentUser
+});
+
+
+export default connect(mapStateToProps)(Header);
