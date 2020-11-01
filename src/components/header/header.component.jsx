@@ -3,16 +3,25 @@ import './header.styles.scss'
 
 import {Link} from 'react-router-dom'
 
+/* REACT COMPONENTS */
 import {ReactComponent as Logo} from '../../assets//crown.svg'
 import CartIcon from '../cart-icon/cart-icon.component'
 import CartDropdown from '../cart-dropdown/cart-dropdown.component'
+import {createStructuredSelector} from 'reselect';
 
+/* STATE SELECTORS */
+import {selectCartHidden} from '../../redux/cart/cart.selectors';
+import {selectCurrentUser} from '../../redux/user/user.selectors';
+
+/* FIREBASE */
 import {auth} from '../../firebase/firebase.utils'
 
 import {connect} from 'react-redux';
 
 
-const Header = ({currentUser, hidden})=>(
+const Header = ({currentUser, hidden})=>{
+
+  return(
     
     <div className="header">
     <Link className="logo-container" to="/">
@@ -33,12 +42,19 @@ const Header = ({currentUser, hidden})=>(
     }
     </div>
     
-)
+)}
 
+/* OPTION A */
 /* FUNCTION TO GET STATE REDUX STORE*/
-const mapStateToProps = ({ user:{currentUser},cart: {hidden}})=>({
-  currentUser,
-  hidden,
+// const mapStateToProps = (state)=>({
+//   currentUser: selectCurrentUser(state),
+//   hidden: selectCartHidden(state),
+// });
+
+/* BETTER OPTION B USING RESELECT*/
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+  hidden: selectCartHidden,
 });
 
 
