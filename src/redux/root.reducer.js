@@ -8,6 +8,8 @@ import storage from 'redux-persist/lib/storage';
 /* COMPONENT REDUCERS */
 import userReducer from './user/user.reducer';
 import cartReducer from './cart/cart.reducer';
+import directoryReducer from './directory/directory.reducer';
+import shopReducer from './shop/shop.reducer';
 
 /* STORAGE CONFIG */
 const storageConfig = {
@@ -20,6 +22,8 @@ const storageConfig = {
 const rootReducer = combineReducers({
   user: userReducer,
   cart: cartReducer,
+  directory: directoryReducer,
+  shop: shopReducer,
 });
 
 /* EXPORT COMBINED REDUCERS WITH THE PERSIST CONFIG ENCAPSULATION */
