@@ -2,9 +2,9 @@ import styled from 'styled-components';
 
 
 export const SignInContainer = styled.div`
-width: 380px;
 display: flex;
 flex-direction: column;
+width: 380px;
 `
 
 export const ButtonsContainer = styled.div`
