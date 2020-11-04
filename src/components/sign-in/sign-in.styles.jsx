@@ -11,6 +11,6 @@ export const ButtonsContainer = styled.div`
 display: flex;
 justify-content: space-between;
 `
-export const Title = styled.h2`
+export const SingInTitle = styled.h2`
 padding: 10px 0;
 `

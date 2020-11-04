@@ -5,7 +5,7 @@ import CustomButton from '../custom-button/custom-button.component';
 import {auth, createUserProfileDocument}from '../../firebase/firebase.utils'
 
 /* STYLED COMPONENTS */
-import {SignUpContainer, Title} from './sign-up.styles';
+import {SignUpContainer, SignUpTitle} from './sign-up.styles';
 
 class SignUp extends React.Component{
     
@@ -56,7 +56,7 @@ class SignUp extends React.Component{
         return(
             
             <SignUpContainer>
-                <Title>I do not have an account</Title>
+                <SignUpTitle>I do not have an account</SignUpTitle>
                 <span>SIgn up with your email and password</span>
                 
                 <form className="sign-up-form" onSubmit={this.handleSubmit}>
