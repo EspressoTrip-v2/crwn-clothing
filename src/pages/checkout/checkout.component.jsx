@@ -9,44 +9,50 @@ import {connect} from 'react-redux';
 
 /* REACT ELEMENTS */
 import CheckoutItem from '../../components/checkout-item/checkout-item.component';
-import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component'
+// import StripeCheckoutButton from '../../components/stripe-button/stripe-button.component'
 
-import './checkout.styles.scss';
+/* STYLED COMPONENTS */
+import {CheckOutPageContainer, CheckOutHeaderContainer, CheckOutHeaderBlock, TotalContainer, TestWarningContainer, StripeCheckoutButtonStyled} from './checkout.styled';
 
 
 const CheckoutPage = ({cartItems, total})=>(
     
-    <div className="checkout-page">
-        <div className="checkout-header">
+<CheckOutPageContainer>
+    <CheckOutHeaderContainer>
             
-        <div className="header-block">
+        <CheckOutHeaderBlock>
                 <span>Product</span>
-        </div>
-        <div className="header-block">
+        </CheckOutHeaderBlock>
+        
+        <CheckOutHeaderBlock>
             <span>Description</span>
-        </div>
-        <div className="header-block">
+        </CheckOutHeaderBlock>
+        
+        <CheckOutHeaderBlock>
             <span>Quantity</span>
-        </div>
-        <div className="header-block">
+        </CheckOutHeaderBlock>
+        
+        <CheckOutHeaderBlock>
             <span>Price</span>
-        </div>
-        <div className="header-block">
+        </CheckOutHeaderBlock>
+        
+        <CheckOutHeaderBlock>
             <span>Remove</span>
-        </div>  
-        </div>
+        </CheckOutHeaderBlock>  
+        
+    </CheckOutHeaderContainer>
         {
             cartItems.map((cartItem=><CheckoutItem key={cartItem.id} cartItem={cartItem} />))
             
         }
-        <div className="total">Total: ${total}</div>
-        <div className="test-warning">*Please use the following credit card number for test payments*
+        <TotalContainer>Total: ${total}</TotalContainer>
+        <TestWarningContainer>*Please use the following credit card number for test payments*
         <br/>
         5555 5555 5555 4444
-        </div>
-        <StripeCheckoutButton price={total}/>
+        </TestWarningContainer>
+        <StripeCheckoutButtonStyled price={total}/>
         
-    </div>
+</CheckOutPageContainer>
 )
 
 const mapStateToProps = createStructuredSelector({
