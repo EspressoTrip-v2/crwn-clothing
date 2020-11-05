@@ -1,16 +1,22 @@
 import React from 'react';
 
+/* IMPORT ROUTER */
+import {withRouter} from 'react-router-dom';
+
 /* REACT COMPONENTS */
 import CollectionItem from '../collection-item/colllection-item.component'
 
 /* STYLED COMPONENTS */
-import {CollectionPreviewContainer, PreviewContainer} from './collection-preview.styles';
+import {CollectionPreviewContainer, PreviewContainer, PreviewTitle} from './collection-preview.styles';
 
-const CollectionPreview = ({title, items}) =>(
+const CollectionPreview = ({routeName, title, items, match}) =>{
+
+    return(
     <CollectionPreviewContainer>
-        <h1 className="title">{title.toUpperCase()}</h1>
+        <PreviewTitle to={`${match.path}/${routeName}`} >{title.toUpperCase()}</PreviewTitle>
         <PreviewContainer>
             {
+                /* ONLY SEND THE FIRST 4 ITEMS TO RENDER */
                 items.filter((item,idx) => idx < 4).map((item) =>(
                     
                 <CollectionItem key={item.id} item={item}/> 
@@ -21,6 +27,6 @@ const CollectionPreview = ({title, items}) =>(
         </PreviewContainer>
     </CollectionPreviewContainer>
     
-)
+)}
 
-export default CollectionPreview;
+export default withRouter(CollectionPreview);

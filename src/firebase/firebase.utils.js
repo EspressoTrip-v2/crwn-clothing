@@ -21,6 +21,8 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   const userRef = firestore.doc(`users/${userAuth.uid}`);
   const snapShot = await userRef.get();
 
+  // console.log(snapShot.data());
+
   /* IF USER DOES NOT EXIST CREATE IN DB*/
   if (!snapShot.exists) {
     /* DESTRUCTOR REQUIRED VARIABLES */
@@ -40,6 +42,41 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   }
   return userRef;
 };
+
+/* CONVER COLLECTIONS SNAPSHOT FUNCTION */
+export const convertCollectionsSnapshotToMap = (collections) => {
+  const transformedCollection = collections.docs.map((doc) => {
+    const { title, items } = doc.data();
+
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      items,
+      title,
+    };
+  });
+  /* CONVERT THE ARRAY TO OBJECT WITH REDUCE */
+  return transformedCollection.reduce((acc, collection) => {
+    acc[collection.title.toLowerCase()] = collection;
+    return acc;
+  }, {});
+};
+
+/* CREATE NEW COLLECTION FUNCTION */
+// export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+//   const collectionRef = firestore.collection(collectionKey);
+
+//   /* CREATE BATCH */
+//   const batch = firestore.batch();
+
+//   /* LOOP THROUGH OBJECTS TO ADD AND GET DOC REF */
+//   objectsToAdd.forEach((obj) => {
+//     const newDocRef = collectionRef.doc();
+//     batch.set(newDocRef, obj);
+//   });
+
+//   return await batch.commit();
+// };
 
 /* INITIALIZE FIREBASE APP WITH CONFIG */
 if (!firebase.apps.length) {

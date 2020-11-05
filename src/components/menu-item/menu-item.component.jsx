@@ -7,7 +7,6 @@ import {MenuItemContainer, BackGroundImageContainer, ContentContainer} from './m
 
 
 const MenuItem = ({title, imageUrl, size, history,match, linkUrl})=>{
-    console.log(imageUrl)
     return(
 <MenuItemContainer size={size} onClick={() =>history.push(`${match.url}${linkUrl}`)} >
         <BackGroundImageContainer imageUrl={imageUrl} className="background-image"/>
