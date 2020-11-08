@@ -12,52 +12,50 @@ import SignInAndSignUp from './pages/sign-in-and-sign-up/sign-in-and-sign-up.com
 import CheckoutPage from './pages/checkout/checkout.component';
 
 /* FIREBASE */
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+// import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 /* REDUX ITEM MODULES */
-import { setCurrentUser } from './redux/user/user.actions';
+import { checkUserSession } from './redux/user/user.actions';
 import { connect } from 'react-redux';
 
 /* SELECTORS */
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/user/user.selectors';
 
+/* SAGAS */
+
 class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    /* GET THE CURRENT USER FROM REDUX PROPS */
-    const { setCurrentUser } = this.props;
+    const { checkUserSession } = this.props;
+    checkUserSession();
 
-    /* ASSIGN TO UNSUBSCRIBE_FROM_AUTH */
-    /* LISTENER GETTING USER AUTH IF STATE HAS CHANGED  */
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      /* CHECK IF USER AUTH IS NOT NULL */
-      if (userAuth) {
-        /* FIREBASE CODE */
-        /* GET THE USER REFERENCE OBJECT FROM THE CREATE PROFILE FUNCTION */
-        const userRef = await createUserProfileDocument(userAuth);
+    // /* ASSIGN TO UNSUBSCRIBE_FROM_AUTH */
+    // /* LISTENER GETTING USER AUTH IF STATE HAS CHANGED  */
+    // this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+    //   /* CHECK IF USER AUTH IS NOT NULL */
+    //   if (userAuth) {
+    //     /* FIREBASE CODE */
+    //     /* GET THE USER REFERENCE OBJECT FROM THE CREATE PROFILE FUNCTION */
+    //     const userRef = await createUserProfileDocument(userAuth);
 
-        if (userRef) {
-          /* GET THE SNAPSHOT OF USER REFERENCE TO EXTRACT THE DATA*/
-          userRef.onSnapshot((snapshot) => {
-            /* SET THE STATE */
-            setCurrentUser({
-              currentUser: {
-                id: snapshot.id,
-                ...snapshot.data(),
-              },
-            });
-          });
-        }
-      }
-      /* IF USER AUTH IS NULL SET STATE TO NULL */
-      setCurrentUser(userAuth);
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribeFromAuth();
+    //     if (userRef) {
+    //       /* GET THE SNAPSHOT OF USER REFERENCE TO EXTRACT THE DATA*/
+    //       userRef.onSnapshot((snapshot) => {
+    //         /* SET THE STATE */
+    //         setCurrentUser({
+    //           currentUser: {
+    //             id: snapshot.id,
+    //             ...snapshot.data(),
+    //           },
+    //         });
+    //       });
+    //     }
+    //   }
+    //   /* IF USER AUTH IS NULL SET STATE TO NULL */
+    //   setCurrentUser(userAuth);
+    // });
   }
 
   render() {
@@ -79,14 +77,6 @@ class App extends React.Component {
   }
 }
 
-/* UNDERSTAND REDUX FLOW */
-
-/* 
-
-ACTION -> DISPATCH -> ROOT-REDUCER -> COMPONENT-REDUCER -> STORE -> VIEW CHANGE
-
-*/
-
 /* GET THE STATE FROM REDUX STORE */
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
@@ -94,7 +84,7 @@ const mapStateToProps = createStructuredSelector({
 
 /* CHANGE STATE WITH DISPATCH, SEND TO */
 const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+  checkUserSession: () => dispatch(checkUserSession()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

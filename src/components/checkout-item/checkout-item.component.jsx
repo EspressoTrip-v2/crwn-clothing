@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 
 /* REDUX MODULES */
 import {clearItemFromCart, addItem, removeItem} from '../../redux/cart/cart.actions';

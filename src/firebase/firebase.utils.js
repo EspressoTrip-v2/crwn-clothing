@@ -21,8 +21,6 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   const userRef = firestore.doc(`users/${userAuth.uid}`);
   const snapShot = await userRef.get();
 
-  // console.log(snapShot.data());
-
   /* IF USER DOES NOT EXIST CREATE IN DB*/
   if (!snapShot.exists) {
     /* DESTRUCTOR REQUIRED VARIABLES */
@@ -63,20 +61,20 @@ export const convertCollectionsSnapshotToMap = (collections) => {
 };
 
 /* CREATE NEW COLLECTION FUNCTION */
-// export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
-//   const collectionRef = firestore.collection(collectionKey);
+export const addCollectionAndDocuments = async (collectionKey, objectsToAdd) => {
+  const collectionRef = firestore.collection(collectionKey);
 
-//   /* CREATE BATCH */
-//   const batch = firestore.batch();
+  /* CREATE BATCH */
+  const batch = firestore.batch();
 
-//   /* LOOP THROUGH OBJECTS TO ADD AND GET DOC REF */
-//   objectsToAdd.forEach((obj) => {
-//     const newDocRef = collectionRef.doc();
-//     batch.set(newDocRef, obj);
-//   });
+  /* LOOP THROUGH OBJECTS TO ADD AND GET DOC REF */
+  objectsToAdd.forEach((obj) => {
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, obj);
+  });
 
-//   return await batch.commit();
-// };
+  return await batch.commit();
+};
 
 /* INITIALIZE FIREBASE APP WITH CONFIG */
 if (!firebase.apps.length) {
@@ -87,11 +85,21 @@ export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 
 /* SETUP GOOGLE SIGN IN */
-const provider = new firebase.auth.GoogleAuthProvider();
-provider.setCustomParameters({ prompt: 'select_account' });
+export const googleProvider = new firebase.auth.GoogleAuthProvider();
+googleProvider.setCustomParameters({ prompt: 'select_account' });
 
 /* EXPORT THE SIGN IN POPUP */
-export const signInWithGoogle = () => auth.signInWithPopup(provider);
+export const signInWithGoogle = () => auth.signInWithPopup(googleProvider);
+
+/* PROMISE BASED AUTH CHECK */
+export const getCurrentUser = () => {
+  return new Promise((resolve, reject) => {
+    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
+      unsubscribe();
+      resolve(userAuth);
+    }, reject);
+  });
+};
 
 /* EXPORT ENTIRE LIBRARY INCASE NEEDED */
 export default firebase;

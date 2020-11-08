@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 
 /* REACT COMPONENTS */
 import {connect} from 'react-redux';

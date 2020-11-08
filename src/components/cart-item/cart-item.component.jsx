@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 
 /* STYLED COMPONENTS */
 import {CartItemContainer, ItemImage, ItemDetailsContainer} from './cart-item.styles';

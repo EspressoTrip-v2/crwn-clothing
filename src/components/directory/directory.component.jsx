@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 
 /* MENU ITEM IMPORT */
 import MenuItem from '../menu-item/menu-item.component';

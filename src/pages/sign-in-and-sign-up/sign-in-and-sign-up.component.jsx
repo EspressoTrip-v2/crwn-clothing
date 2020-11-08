@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 
 /* REACT COMPONENTS */
 import SignIn from '../../components/sign-in/sign-in.component';

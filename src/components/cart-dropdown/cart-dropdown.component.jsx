@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 
 /* REDUX MODULES */
 import {toggleCartHidden} from '../../redux/cart/cart.actions';

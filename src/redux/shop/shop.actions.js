@@ -1,7 +1,7 @@
 import ShopActionTypes from './shop.types';
 
 /* FIRESTORE */
-import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/firebase.utils';
+// import { firestore, convertCollectionsSnapshotToMap } from '../../firebase/firebase.utils';
 
 export const fetchCollectionsStart = () => ({
   type: ShopActionTypes.FETCH_COLLECTIONS_START,
@@ -20,17 +20,17 @@ export const fetchCollectionsFailure = (errorMessage) => ({
 });
 
 /* ACTION CONTROLLER */
-export const fetchCollectionsStartAsync = () => {
-  return (dispatch) => {
-    const collectionRef = firestore.collection('collections');
-    dispatch(fetchCollectionsStart());
-    /* PROMISE GET METHOD */
-    collectionRef
-      .get()
-      .then((snapshot) => {
-        const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
-        dispatch(fetchCollectionsSuccess(collectionsMap));
-      })
-      .catch((error) => dispatch(fetchCollectionsFailure(error.message)));
-  };
-};
+// export const fetchCollectionsStartAsync = () => {
+//   return (dispatch) => {
+//     const collectionRef = firestore.collection('collections');
+//     dispatch(fetchCollectionsStart());
+//     /* PROMISE GET METHOD */
+//     collectionRef
+//       .get()
+//       .then((snapshot) => {
+//         const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+//         dispatch(fetchCollectionsSuccess(collectionsMap));
+//       })
+//       .catch((error) => dispatch(fetchCollectionsFailure(error.message)));
+//   };
+// };

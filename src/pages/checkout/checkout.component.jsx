@@ -1,4 +1,4 @@
-// import React from 'react';
+import React from 'react';
 
 /* SELECTOR */
 import {createStructuredSelector} from 'reselect';
