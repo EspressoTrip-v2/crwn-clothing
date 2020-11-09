@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 /* CONTAINER COMPONENTS */
 import CollectionsOverviewContainer from '../../components/collections-overview/collections-overview.container';
@@ -14,24 +14,18 @@ import {connect} from 'react-redux';
 import {fetchCollectionsStart} from '../../redux/shop/shop.actions';
 
 
-class ShopPage extends React.Component{
+const ShopPage =({fetchCollectionsStart, match})=>{
     
-    componentDidMount() {
-
-     const {fetchCollectionsStart} = this.props;
-     
-     /* RUN ACTION TO PASS TO THUNK MIDDLEWARE */
-        fetchCollectionsStart()    
-    }
+   useEffect(()=>{  
+       console.log('Fired')
+       fetchCollectionsStart()    
+   },[fetchCollectionsStart]) 
     
-    render() {
-        const {match} = this.props;
-        return (
-            <div className="shop-page">
-            <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
-            <Route path={`${match.path}/:collectionId`} component={CollectionPageContainer} />
-            </div>)   
-    }   
+    return ( 
+        <div className="shop-page">
+        <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
+        <Route path={`${match.path}/:collectionId`} component={CollectionPageContainer} />
+        </div>)        
 }
 
 
