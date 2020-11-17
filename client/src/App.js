@@ -1,9 +1,11 @@
-import './App.css';
 import React, { useEffect } from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
 
 /* REACT COMPONENTS */
 import Header from './components/header/header.component';
+
+/* STYLED COMPONENTS */
+import GlobalStyle from './global.style';
 
 /* REACT PAGES */
 import HomePage from './pages/homepage/homepage.component';
@@ -31,6 +33,7 @@ const App = ({ checkUserSession, currentUser }) => {
 
   return (
     <div>
+      <GlobalStyle />
       <Header />
       <Switch>
         <Route exact path="/" component={HomePage} />
