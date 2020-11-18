@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 
 /* ROUTER MODULE */
 import { BrowserRouter } from 'react-router-dom';
@@ -15,9 +16,6 @@ import { store, persistor } from './redux/store';
 /* REDUX PERSIST */
 import { PersistGate } from 'redux-persist/integration/react';
 
-/* SERVICE WORKER IMPORT */
-import * as serviceWorker from './serviceWorker';
-
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
@@ -28,4 +26,4 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root')
 );
-serviceWorker.register();
+serviceWorkerRegistration.register();
